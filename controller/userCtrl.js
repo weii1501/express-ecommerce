@@ -1,6 +1,9 @@
 const { generateToken } = require("../config/jwtToken");
 const User = require("../models/userModel");
 const asyncHandler = require("express-async-handler");
+const validateMongodbid = require("../utils/validateMongodbid");
+const { generateRefreshToken } = require("../config/refreshToken");
+const jwt = require("jsonwebtoken");
 
 const createUser = asyncHandler(async (req, res) => {
   // console.log(req.body);
@@ -24,6 +27,17 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
   const findUser = await User.findOne({ email: email });
   if (findUser && (await findUser.isPasswordMatched(password))) {
     // res.json(findUser);
+    const refreshToken = generateRefreshToken(findUser?._id);
+    const updateuser = await User.findByIdAndUpdate(
+      findUser?._id,
+      { refreshToken: refreshToken },
+      { new: true }
+    );
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      // path: "/api/user/refreshToken",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
     res.json({
       _id: findUser._id,
       firstname: findUser.firstname,
@@ -37,6 +51,30 @@ const loginUserCtrl = asyncHandler(async (req, res) => {
   }
 });
 
+const handleRefreshToken = asyncHandler(async (req, res) => {
+  const cookie = req.cookies;
+  // console.log(cookie);
+  if (!cookie?.refreshToken) {
+    throw new Error("No refresh token");
+  }
+  const refreshToken = cookie.refreshToken;
+  const user = await User.findOne({ refreshToken: refreshToken });
+  if (!user) {
+    throw new Error("No refresh token in database or match");
+  }
+  // res.json(user)
+  jwt.verify(refreshToken, process.env.JWT_SECRET, (err, decode) => {
+    // console.log(user._id !== decode.id);
+    if (err || user.id !== decode.id) {
+      throw new Error("there is an error in refresh token");
+    }
+    const accessToken = generateToken(user._id);
+    res.json({
+      accessToken,
+    });
+  });
+});
+
 const getAllUser = asyncHandler(async (req, res) => {
   try {
     const users = await User.find({});
@@ -48,6 +86,7 @@ const getAllUser = asyncHandler(async (req, res) => {
 
 const getUserById = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  validateMongodbid(id);
   try {
     const getUser = await User.findById(id);
     res.json({ getUser });
@@ -59,6 +98,7 @@ const getUserById = asyncHandler(async (req, res) => {
 
 const deleteUserById = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  validateMongodbid(id);
   try {
     const deleteUser = await User.findByIdAndDelete(id);
     res.json({ deleteUser });
@@ -69,7 +109,9 @@ const deleteUserById = asyncHandler(async (req, res) => {
 });
 
 const updateUserById = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.user;
+  validateMongodbid(id);
+  //   console.log(id);
   // console.log(req.body);
   try {
     const updateUser = await User.findByIdAndUpdate(
@@ -90,6 +132,46 @@ const updateUserById = asyncHandler(async (req, res) => {
   }
 });
 
+const blockUser = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  validateMongodbid(id);
+  try {
+    const blockUser = await User.findByIdAndUpdate(
+      id,
+      {
+        isBlocked: true,
+      },
+      { new: true }
+    );
+    res.json({
+      message: "User is blocked",
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error in blocking user by id");
+  }
+});
+
+const unblockUser = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  validateMongodbid(id);
+  try {
+    const unblockUser = await User.findByIdAndUpdate(
+      id,
+      {
+        isBlocked: false,
+      },
+      { new: true }
+    );
+    res.json({
+      message: "User is unblocked",
+    });
+  } catch (error) {
+    console.log(error);
+    throw new Error("Error in unblocking user by id");
+  }
+});
+
 module.exports = {
   createUser,
   loginUserCtrl,
@@ -97,4 +179,7 @@ module.exports = {
   getUserById,
   deleteUserById,
   updateUserById,
+  blockUser,
+  unblockUser,
+  handleRefreshToken,
 };
