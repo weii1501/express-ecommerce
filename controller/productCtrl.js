@@ -36,7 +36,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
     const deleteProduct = await Product.findByIdAndDelete(id);
     res.json({
       message: "Product deleted",
-      product: deleteProduct
+      product: deleteProduct,
     });
   } catch (error) {
     throw new Error(`Error: ${error}`);
@@ -55,8 +55,52 @@ const getaProduct = asyncHandler(async (req, res) => {
 
 const getAllProduct = asyncHandler(async (req, res) => {
   try {
-    const products = await Product.find({});
-    res.json(products);
+    const queryObj = { ...req.query };
+    const excludedFields = ["page", "sort", "limit", "fields"];
+    excludedFields.forEach((el) => delete queryObj[el]);
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+    console.log(queryStr);
+    let query = Product.find(JSON.parse(queryStr));
+
+    // Sorting
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(",").join(" ");
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort("-createdAt");
+    }
+
+    // Field limiting
+    if (req.query.fields) {
+      const fields = req.query.fields.split(",").join(" ");
+      query = query.select(fields);
+    } else {
+      query = query.select("-__v");
+    }
+
+    // Pagination
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit;
+    const skip = (page - 1) * limit;
+    const totalProducts = await Product.countDocuments();
+    const totalPage = Math.ceil(totalProducts / limit);
+
+    query = query.skip(skip).limit(limit);
+    if (req.query.page) {
+      const numProducts = await Product.countDocuments();
+      if (skip >= totalProducts) throw new Error("This page does not exist");
+    }
+
+    const products = await query;
+
+    res.json({
+      totalPage,
+      totalProducts,
+      currentPage: page,
+      limit,
+      products,
+    });
   } catch (error) {
     throw new Error("Products not found");
   }
@@ -67,5 +111,5 @@ module.exports = {
   getaProduct,
   getAllProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
 };

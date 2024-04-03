@@ -1,0 +1,305 @@
+{
+	"info": {
+		"_postman_id": "7f787987-a0c2-437d-90e8-9da2441848b0",
+		"name": "Ecommerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "24762029",
+		"_collection_link": "https://planetary-shadow-32052.postman.co/workspace/My-Workspace~4e9a0e3f-7443-421c-8afe-23eda1cf13dc/collection/24762029-7f787987-a0c2-437d-90e8-9da2441848b0?action=share&source=collection_link&creator=24762029"
+	},
+	"item": [
+		{
+			"name": "userApi",
+			"item": [
+				{
+					"name": "registry",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstname",
+									"value": "vo",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "luc",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "vodacluc15@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "mobile",
+									"value": "03327068511",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "111111",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:4000/api/user/register"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "asdfasdf",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "asdfasdfa",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:4000/api/user/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:4000/api/user/all-user"
+					},
+					"response": []
+				},
+				{
+					"name": "Get user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjZmZmNhNGMwM2Y5YTEzNDVjNGQ4MiIsImlhdCI6MTcxMDY4NjQ2NSwiZXhwIjoxNzEzMjc4NDY1fQ.UyYtKLiYqtNVC691b7fznj32-deEgGQFpH8v71clSYw"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:4000/api/user/65f6f78bc3236b41510f5a56"
+					},
+					"response": []
+				},
+				{
+					"name": "Update user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjcwMjAyZTY5ZjA5YmM0NGM1ZmMxYiIsImlhdCI6MTcxMDY4Njg5OCwiZXhwIjoxNzEzMjc4ODk4fQ.EZBRrnhao5gJ387xZzJknH1Nw9QIHyhKXcBg5a5XriE"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstname",
+									"value": "tran",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "bo",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "ha123@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "mobile",
+									"value": "111111",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:4000/api/user/update-user"
+					},
+					"response": []
+				},
+				{
+					"name": "Block user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjZmZmNhNGMwM2Y5YTEzNDVjNGQ4MiIsImlhdCI6MTcxMDY4NzU4OCwiZXhwIjoxNzEzMjc5NTg4fQ.cK3Xl4zO3ci4GsdKxhIRsvHNYET9kKCwCi_aaIrNXV8"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"url": "http://localhost:4000/api/user/block-user/65f6fd91b34b4d0ae484f37e"
+					},
+					"response": []
+				},
+				{
+					"name": "Unblock user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjZmZmNhNGMwM2Y5YTEzNDVjNGQ4MiIsImlhdCI6MTcxMDY4NzU4OCwiZXhwIjoxNzEzMjc5NTg4fQ.cK3Xl4zO3ci4GsdKxhIRsvHNYET9kKCwCi_aaIrNXV8"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"url": "http://localhost:4000/api/user/unblock-user/65f6fd91b34b4d0ae484f37e"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:4000/api/user/65f6f446304f9808e26d5242"
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh token",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjZmZmNhNGMwM2Y5YTEzNDVjNGQ4MiIsImlhdCI6MTcxMDY5MDA1NSwiZXhwIjoxNzEzMjgyMDU1fQ.uUypT34gSQ0_td34ZD5HGaf0nejojEEDQwUPM04hHJo"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:4000/api/user/refresh/"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:4000/api/user/logout"
+					},
+					"response": []
+				},
+				{
+					"name": "Forget password token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"vodacluc2001@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/api/user/forget-password-token"
+					},
+					"response": []
+				},
+				{
+					"name": "Reset password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "http://localhost:4000/api/user/forget-password-token"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "productApi",
+			"item": [
+				{
+					"name": "Create new product",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Apple Watch\",\n    \"description\": \"This is description of Apple Watch\",\n    \"price\": 500,\n    \"quatity\": 500,\n    \"color\": \"white\",\n    \"brand\": \"Apple\",\n    \"category\": \"Watch\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/api/product/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a product",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get all product",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Update a product",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Samsung Watch\",\n    \"description\": \"This is description of Samsung Watch\",\n    \"price\": 500,\n    \"quatity\": 500,\n    \"color\": \"white\",\n    \"brand\": \"Samsung\",\n    \"category\": \"Watch\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:4000/api/product/"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:4000/api/product/660bbc447303e35c1bd831e6"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:4000/api/"
+		}
+	]
+}

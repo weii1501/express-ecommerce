@@ -4,6 +4,8 @@ const asyncHandler = require("express-async-handler");
 const validateMongodbid = require("../utils/validateMongodbid");
 const { generateRefreshToken } = require("../config/refreshToken");
 const jwt = require("jsonwebtoken");
+const { sendEmail } = require("./emailCtrl");
+const crypto = require("crypto");
 
 const createUser = asyncHandler(async (req, res) => {
   // console.log(req.body);
@@ -197,6 +199,70 @@ const unblockUser = asyncHandler(async (req, res) => {
   }
 });
 
+const updatePassword = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { password } = res.body;
+  validateMongodbid(_id);
+  const user = await User.findById(_id);
+  if (password) {
+    user.password = password;
+    await user.save();
+    res.json({
+      message: "Password updated successfully",
+    });
+  } else {
+    throw new Error("Password not updated");
+  }
+});
+
+const forgetPasswordToken = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  console.log(user);
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  try {
+    const token = await user.createPasswordResetToken();
+    user.save({ validateBeforeSave: false });
+    const resetUrl = `Hi, Please click on the link to reset your password: <a
+      href="http://localhost:3000/api/user/reset-password/${token}"
+    >Click here</a>`;
+    const data = {
+      to: email,
+      subject: "Password reset link",
+      text: "Hey guys",
+      html: resetUrl,
+    }
+    // sendEmail(data, req, res);
+    res.json({
+      message: "Email sent successfully",
+      token,
+    });
+  } catch (error) {
+    throw new Error(`Error in sending email: ${error}`);
+  }
+});
+
+const resetPassword = asyncHandler(async (req, res) => {
+  const { password } = req.body;
+  const { token } = req.params;
+  const haskedToken = crypto.createHash("sha256").update(token).digest("hex");
+  const user = await User.findOne({
+    passwordResetToken: haskedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
+  if (!user) {
+    throw new Error("Token is invalid or expired");
+  }
+  user.password = password;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+  await user.save();
+  res.json(user);
+});
+
 module.exports = {
   createUser,
   loginUserCtrl,
@@ -208,4 +274,7 @@ module.exports = {
   unblockUser,
   handleRefreshToken,
   logout,
+  updatePassword,
+  forgetPasswordToken,
+  resetPassword
 };

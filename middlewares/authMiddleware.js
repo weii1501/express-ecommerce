@@ -18,7 +18,7 @@ const authMiddleware = asyncHandler(async (req, res, next) => {
           next();
         }
       } catch {
-        // res.status(401);
+        res.status(401);
         throw new Error("Not authorized, token failed");
       }
     } catch (error) {
@@ -39,7 +39,7 @@ const isAdmin = asyncHandler(async (req, res, next) => {
       throw new Error("Not authorized as an admin");
     }
   } catch (error) {
-    // res.status(401);
+    res.status(401);
     throw new Error("Not authorized as an admin");
   }
 });
