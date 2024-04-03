@@ -33,6 +33,12 @@ var blogSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    dislikes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     image: {
       type: String,
       default:
@@ -51,4 +57,4 @@ var blogSchema = new mongoose.Schema(
 );
 
 //Export the model
-module.exports = mongoose.model("User", blogSchema);
+module.exports = mongoose.model("Blog", blogSchema);

@@ -1,6 +1,7 @@
 const Product = require("../models/productModel");
 const asyncHandler = require("express-async-handler");
 const slugify = require("slugify");
+const { BASE_URL } = require("../constants");
 
 const createProduct = asyncHandler(async (req, res) => {
   try {
@@ -80,16 +81,24 @@ const getAllProduct = asyncHandler(async (req, res) => {
     }
 
     // Pagination
-    const page = req.query.page * 1 || 1;
-    const limit = req.query.limit;
-    const skip = (page - 1) * limit;
     const totalProducts = await Product.countDocuments();
+    const page = req.query.page * 1 || 1;
+    const limit = req.query.limit || totalProducts;
+    const skip = (page - 1) * limit;
     const totalPage = Math.ceil(totalProducts / limit);
+    let nextPage = null;
+    let prevPage = null;
 
     query = query.skip(skip).limit(limit);
     if (req.query.page) {
-      const numProducts = await Product.countDocuments();
+      //   const numProducts = await Product.countDocuments();
       if (skip >= totalProducts) throw new Error("This page does not exist");
+      if (page < totalPage) {
+        nextPage = `${BASE_URL}/api/products?page=${page + 1}&limit=${limit}`;
+      }
+      if (page > 1) {
+        prevPage = `${BASE_URL}/api/products?page=${page - 1}&limit=${limit}`;
+      }
     }
 
     const products = await query;
@@ -99,6 +108,8 @@ const getAllProduct = asyncHandler(async (req, res) => {
       totalProducts,
       currentPage: page,
       limit,
+      nextPage,
+      prevPage,
       products,
     });
   } catch (error) {
