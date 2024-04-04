@@ -21,10 +21,10 @@ router.post("/", authMiddleware, isAdmin, createProduct);
 router.put("/add-to-wishlist", authMiddleware, addToWishList);
 router.put("/rating", authMiddleware, ratingProduct);
 router.put(
-  "/upload",
+  "/upload/:id",
   authMiddleware,
   isAdmin,
-  uploadPhoto.array("images", 100),
+  uploadPhoto.array("images", 10),
   productImgResize,
   uploadImage
 );

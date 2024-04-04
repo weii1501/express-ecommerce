@@ -39,11 +39,7 @@ var blogSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    image: {
-      type: String,
-      default:
-        "https://www.toponseek.com/blogs/wp-content/uploads/2022/06/viet-blog-3.jpg",
-    },
+    images: [],
     author: {
       type: String,
       default: "Admin",

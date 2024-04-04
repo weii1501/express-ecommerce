@@ -3,8 +3,13 @@ const sharp = require("sharp");
 const path = require("path");
 
 const multerStorage = multer.diskStorage({
-  diskStorage: (req, file, cb) => {
-    cb(null, path.join(__dirname, "../public/images"));
+  destination: (req, file, cb) => {
+    console.log(req.baseUrl);
+    if (req.baseUrl === "/api/product") {
+      cb(null, path.join(__dirname, "../public/images/products/"));
+    } else if (req.baseUrl === "/api/blog") {
+      cb(null, path.join(__dirname, "../public/images/blogs/"));
+    }
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
@@ -36,7 +41,7 @@ const productImgResize = async (req, res, next) => {
   if (!req.file) return next();
   await Promise.all(
     req.files.map(async (file) => {
-      await sharp(file.buffer)
+      await sharp(file.path)
         .resize(500, 500)
         .toFormat("jpeg")
         .jpeg({ quality: 90 })
@@ -46,7 +51,22 @@ const productImgResize = async (req, res, next) => {
   next();
 };
 
+const blogImgResize = async (req, res, next) => {
+  if (!req.file) return next();
+  await Promise.all(
+    req.files.map(async (file) => {
+      await sharp(file.path)
+        .resize(500, 500)
+        .toFormat("jpeg")
+        .jpeg({ quality: 90 })
+        .toFile(`public/images/blogs/${file.filename}`);
+    })
+  );
+  next();
+};
+
 module.exports = {
   uploadPhoto,
-  productImgResize
+  productImgResize,
+  blogImgResize
 };

@@ -14,6 +14,7 @@ const prodcategoryRoute = require('./routes/prodcategoryRoute');
 const blogCatRoute = require('./routes/blogCatRoute');
 const brandRoute = require('./routes/brandRoute');
 const couponRoute = require('./routes/couponRoute');
+const addressRoute = require('./routes/addressRoute');
 
 dbConnect();
 
@@ -29,6 +30,7 @@ app.use('/api/category', prodcategoryRoute);
 app.use('/api/blogcategory', blogCatRoute);
 app.use('/api/brand', brandRoute);
 app.use('/api/coupon', couponRoute);
+app.use('/api/address', addressRoute);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -13,16 +13,29 @@ const {
   updatePassword,
   forgetPasswordToken,
   resetPassword,
+  loginAdmin,
+  getWishList,
+  userCart,
+  getUserCart,
+  emptyCard,
+  applyCoupon,
 } = require("../controller/userCtrl");
 const router = expess.Router();
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
 
+// router.post("/apply-coupon",authMiddleware, applyCoupon)
+router.post("/apply-coupon", authMiddleware, applyCoupon)
 router.post("/register", createUser);
 router.post("/login", loginUserCtrl);
+router.post("/login-admin", loginAdmin);
 router.get("/all-user", getAllUser);
 router.get("/refresh", handleRefreshToken);
 router.get("/logout", logout);
 router.put("/update-user", authMiddleware, updateUserById);
+router.get("/wishlist", authMiddleware, getWishList);
+router.post("/cart",authMiddleware, userCart)
+router.get("/cart",authMiddleware, getUserCart)
+router.delete("/empty-cart",authMiddleware, emptyCard)
 router.put("/block-user/:id", authMiddleware, isAdmin, blockUser);
 router.put("/unblock-user/:id", authMiddleware, isAdmin, unblockUser);
 router.post("update-password", authMiddleware, updatePassword);

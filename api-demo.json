@@ -11,7 +11,7 @@
 			"name": "userApi",
 			"item": [
 				{
-					"name": "registry",
+					"name": "Registry",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -20,27 +20,27 @@
 							"urlencoded": [
 								{
 									"key": "firstname",
-									"value": "vo",
+									"value": "Tran",
 									"type": "text"
 								},
 								{
 									"key": "lastname",
-									"value": "luc",
+									"value": "Hien",
 									"type": "text"
 								},
 								{
 									"key": "email",
-									"value": "vodacluc15@gmail.com",
+									"value": "vodacluc2001@gmail.com",
 									"type": "text"
 								},
 								{
 									"key": "mobile",
-									"value": "03327068511",
+									"value": "0332706859",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "111111",
+									"value": "15012001",
 									"type": "text"
 								}
 							]
@@ -50,7 +50,7 @@
 					"response": []
 				},
 				{
-					"name": "login",
+					"name": "Login",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -70,6 +70,30 @@
 							]
 						},
 						"url": "http://localhost:4000/api/user/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Login Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "admin@email.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": "http://localhost:4000/api/user/login-admin"
 					},
 					"response": []
 				},
@@ -226,6 +250,92 @@
 						"url": "http://localhost:4000/api/user/forget-password-token"
 					},
 					"response": []
+				},
+				{
+					"name": "Get wishlist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjZmZmNhNGMwM2Y5YTEzNDVjNGQ4MiIsImlhdCI6MTcxMjE1MjI5OCwiZXhwIjoxNzE0NzQ0Mjk4fQ.sxApwTDClOYdZmzVRD--A0nF07Q0OyL4KwOFuY3zl8A"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}user/wishlist"
+					},
+					"response": []
+				},
+				{
+					"name": "Add to cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGUyZjBhNTFhYzEwNThiOGNmNjg0MyIsImlhdCI6MTcxMjIxNzkwMywiZXhwIjoxNzE0ODA5OTAzfQ.fJg621GPCr6fXAyBMnFTFrtGRcOLxFL55z6DON5G8WE"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cart\": [\n        {\n            \"_id\": \"660c0326826717b1a656a1f8\",\n            \"count\": 3,\n            \"color\": \"yellow\"\n        },\n        {\n            \"_id\": \"660c02badb9e40452c54478a\",\n            \"count\": 4,\n            \"color\": \"red\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}user/cart"
+					},
+					"response": []
+				},
+				{
+					"name": "Get user cart",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Empty cart",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGUyZjBhNTFhYzEwNThiOGNmNjg0MyIsImlhdCI6MTcxMjIxOTY1NiwiZXhwIjoxNzE0ODExNjU2fQ.FlguspWO5aI9cQ2pknmWbgQtuviAhenSevPqiRrBrzo"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{base_url}}user/empty-cart"
+					},
+					"response": []
+				},
+				{
+					"name": "Apply coupon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGUyZjBhNTFhYzEwNThiOGNmNjg0MyIsImlhdCI6MTcxMjIyMDY3NiwiZXhwIjoxNzE0ODEyNjc2fQ.XdpDoj_gtQv3fBXyDeSB2tkeHwI5rcu52mHbypRJ4Os"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"coupon\": \"660d6ae34a00855316a0d845\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}user/apply-coupon"
+					},
+					"response": []
 				}
 			]
 		},
@@ -290,6 +400,781 @@
 						"method": "DELETE",
 						"header": [],
 						"url": "http://localhost:4000/api/product/660bbc447303e35c1bd831e6"
+					},
+					"response": []
+				},
+				{
+					"name": "Add to wishlist",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"prodId\": \"660c02badb9e40452c54478a\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}product/add-to-wishlist"
+					},
+					"response": []
+				},
+				{
+					"name": "Rate a product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjZmZmNhNGMwM2Y5YTEzNDVjNGQ4MiIsImlhdCI6MTcxMjE1MjI5OCwiZXhwIjoxNzE0NzQ0Mjk4fQ.sxApwTDClOYdZmzVRD--A0nF07Q0OyL4KwOFuY3zl8A"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"prodId\": \"660c02badb9e40452c54478a\",\n    \"comment\": \"good item\",\n    \"star\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}product/rating"
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Images",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjZmZmNhNGMwM2Y5YTEzNDVjNGQ4MiIsImlhdCI6MTcxMjE1MjI5OCwiZXhwIjoxNzE0NzQ0Mjk4fQ.sxApwTDClOYdZmzVRD--A0nF07Q0OyL4KwOFuY3zl8A"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/Users/vodacluc/Downloads/Layer 584.jpg"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/Users/vodacluc/Downloads/z5252250649286_5aa5f25307a392fc9c59545314a39e49.jpg"
+								}
+							]
+						},
+						"url": "{{base_url}}product/upload/660c0326826717b1a656a1f8"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "blog",
+			"item": [
+				{
+					"name": "Create a blog",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"My Blog 1\",\n    \"category\": \"IT\",\n    \"description\": \"This is blog's description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}blog/"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a blog",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyMDk4NiwiZXhwIjoxNzE0NzEyOTg2fQ.O_7DMwqXOoEIOnDuW2QXYOvAD4NmewanSHlBVrnLZPg"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"My Updated Blog 5\",\n    \"category\": \"Coding\",\n    \"description\": \"This is blog's description\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}blog/660ce37b939e9a52195ebbce"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a blog",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}blog/660ce2f5939e9a52195ebbca"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all blogs",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a blog",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{base_url}}blog/660ce37b939e9a52195ebbce"
+					},
+					"response": []
+				},
+				{
+					"name": "Like a blog",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"blogId\": \"660cf5328efc250666a2cec8\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}blog/likes"
+					},
+					"response": []
+				},
+				{
+					"name": "Dislike a blog",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"blogId\": \"660ce2f5939e9a52195ebbca\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}blog/dislikes"
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Images",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjZmZmNhNGMwM2Y5YTEzNDVjNGQ4MiIsImlhdCI6MTcxMjE1MjI5OCwiZXhwIjoxNzE0NzQ0Mjk4fQ.sxApwTDClOYdZmzVRD--A0nF07Q0OyL4KwOFuY3zl8A"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/Users/vodacluc/Downloads/01 copy 2.jpg"
+								},
+								{
+									"key": "images",
+									"type": "file",
+									"src": "/Users/vodacluc/Downloads/DSC_1157 copy copy.jpg"
+								}
+							]
+						},
+						"url": "{{base_url}}blog/upload/660ce2f5939e9a52195ebbca"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "prod category",
+			"item": [
+				{
+					"name": "Create new category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "{{base_url}}category/"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Foods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}category/660d245a0a5850ab04979d7d"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Foods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}category/660d245a0a5850ab04979d7d"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Foods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}category/660d244f0a5850ab04979d75"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Foods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}category/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "blog category",
+			"item": [
+				{
+					"name": "Create new category",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "{{base_url}}blogcategory/"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Foods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}blogcategory/660d245a0a5850ab04979d7d"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Foods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}blogcategory/660d245a0a5850ab04979d7d"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Foods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}blogcategory/660d244f0a5850ab04979d75"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Foods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}blogcategory/"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "brand",
+			"item": [
+				{
+					"name": "Create new category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Lenovo\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}brand/"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Foods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}blogcategory/660d245a0a5850ab04979d7d"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Foods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}blogcategory/660d245a0a5850ab04979d7d"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Foods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}brand/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a category",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxMDk3NWNmODUzYjMyY2E0NTg1ZCIsImlhdCI6MTcxMjEyNTY1MCwiZXhwIjoxNzE0NzE3NjUwfQ.Vred3RWN_0MgfmXNh7cTOyBm6FdqFbgqeu5g6Vji7FM"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"Foods\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}blogcategory/660d244f0a5850ab04979d75"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "coupon",
+			"item": [
+				{
+					"name": "Create new coupon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjZmZmNhNGMwM2Y5YTEzNDVjNGQ4MiIsImlhdCI6MTcxMjE1MjI5OCwiZXhwIjoxNzE0NzQ0Mjk4fQ.sxApwTDClOYdZmzVRD--A0nF07Q0OyL4KwOFuY3zl8A"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"HOLI\",\n    \"expiry\": \"Thu, 04 Apr 2024 06:27:30 GMT\",\n    \"discount\": 30\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}coupon/"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all coupon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjZmZmNhNGMwM2Y5YTEzNDVjNGQ4MiIsImlhdCI6MTcxMjE1MjI5OCwiZXhwIjoxNzE0NzQ0Mjk4fQ.sxApwTDClOYdZmzVRD--A0nF07Q0OyL4KwOFuY3zl8A"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}coupon/"
+					},
+					"response": []
+				},
+				{
+					"name": "Update a coupon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjZmZmNhNGMwM2Y5YTEzNDVjNGQ4MiIsImlhdCI6MTcxMjE1MjI5OCwiZXhwIjoxNzE0NzQ0Mjk4fQ.sxApwTDClOYdZmzVRD--A0nF07Q0OyL4KwOFuY3zl8A"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"HOLI\",\n    \"expiry\": \"Thu, 04 Apr 2024 06:27:30 GMT\",\n    \"discount\": 30\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}coupon/660d68e9daea9557ca313a2e"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a coupon",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjZmZmNhNGMwM2Y5YTEzNDVjNGQ4MiIsImlhdCI6MTcxMjE1MjI5OCwiZXhwIjoxNzE0NzQ0Mjk4fQ.sxApwTDClOYdZmzVRD--A0nF07Q0OyL4KwOFuY3zl8A"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{base_url}}coupon/660d68e9daea9557ca313a2e"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "address",
+			"item": [
+				{
+					"name": "Create user address",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxZTdmNjg1MDdmMTExMmEzNGZmOCIsImlhdCI6MTcxMjIwNzI4NiwiZXhwIjoxNzE0Nzk5Mjg2fQ.9TY6ql_9yXdM1vNF4WbZRJvEO8ziX2wthdv5f4bttOw"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"addressLine1\": \"test3\",\n    \"addressLine2\": \"test3\",\n    \"city\": \"test3\",\n    \"province\": \"test3\",\n    \"district\": \"test3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}address"
+					},
+					"response": []
+				},
+				{
+					"name": "Update user address",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxZTdmNjg1MDdmMTExMmEzNGZmOCIsImlhdCI6MTcxMjIwNzI4NiwiZXhwIjoxNzE0Nzk5Mjg2fQ.9TY6ql_9yXdM1vNF4WbZRJvEO8ziX2wthdv5f4bttOw"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"addressLine1\": \"test1\",\n    \"addressLine2\": \"test1\",\n    \"city\": \"test1\",\n    \"province\": \"test1\",\n    \"district\": \"test1\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}address/660e36417fa3bf7e7853b7ae"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete user address",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxZTdmNjg1MDdmMTExMmEzNGZmOCIsImlhdCI6MTcxMjIwNzI4NiwiZXhwIjoxNzE0Nzk5Mjg2fQ.9TY6ql_9yXdM1vNF4WbZRJvEO8ziX2wthdv5f4bttOw"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"addressLine1\": \"test1\",\n    \"addressLine2\": \"test1\",\n    \"city\": \"test1\",\n    \"province\": \"test1\",\n    \"district\": \"test1\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}address/660e36417fa3bf7e7853b7ae"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all user address",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGMxZTdmNjg1MDdmMTExMmEzNGZmOCIsImlhdCI6MTcxMjIwNzI4NiwiZXhwIjoxNzE0Nzk5Mjg2fQ.9TY6ql_9yXdM1vNF4WbZRJvEO8ziX2wthdv5f4bttOw"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}address/660e39b4e2628f5f67fafaef"
+					},
+					"response": []
+				},
+				{
+					"name": "Get a user address",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
