@@ -19,6 +19,7 @@ const {
   getUserCart,
   emptyCard,
   applyCoupon,
+  creataOrder,
 } = require("../controller/userCtrl");
 const router = expess.Router();
 const { authMiddleware, isAdmin } = require("../middlewares/authMiddleware");
@@ -36,6 +37,7 @@ router.get("/wishlist", authMiddleware, getWishList);
 router.post("/cart",authMiddleware, userCart)
 router.get("/cart",authMiddleware, getUserCart)
 router.delete("/empty-cart",authMiddleware, emptyCard)
+router.post("/cart-order", authMiddleware, creataOrder)
 router.put("/block-user/:id", authMiddleware, isAdmin, blockUser);
 router.put("/unblock-user/:id", authMiddleware, isAdmin, unblockUser);
 router.post("update-password", authMiddleware, updatePassword);

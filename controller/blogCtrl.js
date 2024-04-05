@@ -6,35 +6,49 @@ const { BASE_URL } = require("../constants");
 const cloudinaryImgUpload = require("../utils/cloudinary");
 const fs = require("fs");
 
+const objectCRUD = require("../methods/objectCRUD");
+
 const createBlog = asyncHandler(async (req, res) => {
-  try {
-    const newBlog = new Blog(req.body);
-    await newBlog.save();
-    res.json({
-      message: "Blog created",
-      newBlog: newBlog,
-    });
-  } catch (error) {
-    throw new Error(`Blog not created: ${error}`);
-  }
+  // try {
+  //   const newBlog = new Blog(req.body);
+  //   await newBlog.save();
+  //   res.json({
+  //     message: "Blog created",
+  //     newBlog: newBlog,
+  //   });
+  // } catch (error) {
+  //   throw new Error(`Blog not created: ${error}`);
+  // }
+  const newBlog = new objectCRUD(Blog);
+  await newBlog.create(req.body);
+  res.json({
+    message: "Blog created",
+    newBlog: newBlog.createdObj,
+  });
 });
 
 const updateBlog = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  validateMongodbid(id);
-  // console.log(id);
-  try {
-    const updatedBlog = await Blog.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
-    //   await updatedBlog.save();
-    res.json({
-      message: "Blog upadated",
-      updateBlog: updatedBlog,
-    });
-  } catch (error) {
-    throw new Error(`Blog not created: ${error}`);
-  }
+  // validateMongodbid(id);
+  // // console.log(id);
+  // try {
+  //   const updatedBlog = await Blog.findByIdAndUpdate(id, req.body, {
+  //     new: true,
+  //   });
+  //   //   await updatedBlog.save();
+  //   res.json({
+  //     message: "Blog upadated",
+  //     updateBlog: updatedBlog,
+  //   });
+  // } catch (error) {
+  //   throw new Error(`Blog not created: ${error}`);
+  // }
+  const updateBlog = await new objectCRUD(Blog).update(id, req.body);
+  console.log(updateBlog);
+  res.json({
+    message: "Blog updated",
+    updateBlog: updateBlog,
+  })
 });
 
 const getBlog = asyncHandler(async (req, res) => {

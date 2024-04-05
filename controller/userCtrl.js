@@ -3,12 +3,14 @@ const User = require("../models/userModel");
 const Product = require("../models/productModel");
 const Cart = require("../models/cartModel");
 const Coupon = require("../models/couponModel");
+const Order = require("../models/orderModel");
 const asyncHandler = require("express-async-handler");
 const validateMongodbid = require("../utils/validateMongodbid");
 const { generateRefreshToken } = require("../config/refreshToken");
 const jwt = require("jsonwebtoken");
 const { sendEmail } = require("./emailCtrl");
 const crypto = require("crypto");
+const uniqid = require('uniqid'); 
 
 const createUser = asyncHandler(async (req, res) => {
   // console.log(req.body);
@@ -414,6 +416,55 @@ const applyCoupon = asyncHandler(async (req, res) => {
   res.json(totalAfterDiscount);
 });
 
+const creataOrder = asyncHandler(async (req, res) => {
+  const { COD, couponApplied } = req.body;
+  const { _id } = req.user;
+  validateMongodbid(_id);
+  try {
+    if (!COD) throw new Error("Create cash order failed");
+    let userCart = await Cart.findOne({ orderedBy: _id });
+    let finalAmount = 0;
+    if (couponApplied && userCart.totalAfterDiscount) {
+      finalAmount = userCart.totalAfterDiscount * 100;
+    } else {
+      finalAmount = userCart.cartTotal * 100;
+    }
+
+    const newOrder = await new Order({
+      products: userCart.products,
+      paymentIntent: {
+        id: uniqid(),
+        method: "COD",
+        amount: finalAmount,
+        status: "Cash on delivery",
+        created: Date.now(),
+        currency: "usd",
+      },
+      orderedBy: _id,
+      orderStatus: "Cash on delivery",
+    }).save();
+
+    let update = userCart.products.map((item) => {
+      return {
+        updateOne: {
+          filter: { _id: item.product._id },
+          update: { $inc: { quantity: -item.count, sold: +item.count } },
+        },
+      };
+    });
+
+    const updated = await Product.bulkWrite(update, {});
+
+    res.json({
+      message: "Order created successfully",
+      newOrder,
+      updated,
+    });
+  } catch (error) {
+    throw new Error(`Error in creating order: ${error}`);
+  }
+});
+
 module.exports = {
   createUser,
   loginUserCtrl,
@@ -433,5 +484,6 @@ module.exports = {
   userCart,
   getUserCart,
   emptyCard,
-  applyCoupon
+  applyCoupon,
+  creataOrder
 };
